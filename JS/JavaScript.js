@@ -10,16 +10,14 @@ const Modal = {
         document.querySelector('.modal-overlay').classList.remove('active')
     }
 }
-const Storage ={
-
-    get(){
-        return JSON.parse(localStorage.getItem('dev.finances:transactions')) || []
+const Storage = {
+    get() {
+        return JSON.parse(localStorage.getItem("dev.finances:transactions")) || []
     },
 
-    set(transactions){
+    set(transactions) {
         localStorage.setItem("dev.finances:transactions", JSON.stringify(transactions))
     }
-
 }
 
 const Transaction = {
@@ -140,7 +138,7 @@ const Utils = {
         value = Number(value) * 100
         return value
 
-        // value = Number(value.replace(/\,\./g, "")) * 100 para ter retira . e a , 100%
+        // value = Number(value.replace(/\,?\./g, "")) * 100 para ter retira . e a , 100%
     },
 
     formatCurrency(value){
@@ -149,7 +147,6 @@ const Utils = {
         value = String(value).replace(/\D/g, "")
         
         value = Number(value) / 100
-        
         value = value.toLocaleString("pt-br", {
             style: "currency",
             currency: "BRL"

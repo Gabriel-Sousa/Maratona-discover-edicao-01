@@ -22,6 +22,7 @@ const Storage = {
 
 const Transaction = {
     all: Storage.get(),
+
     add(transaction){
         Transaction.all.push(transaction)
         
@@ -30,8 +31,10 @@ const Transaction = {
 
     remove(index){
         Transaction.all.splice(index, 1)
+
         App.reload()
     },
+
     incomes(){
 
         let income = 0
@@ -52,17 +55,17 @@ const Transaction = {
 
     expenses(){
 
-        let expenses = 0
+        let expense = 0
     
         Transaction.all.forEach(transaction =>{
 
             if(transaction.amount < 0){
-                expenses += transaction.amount
+                expense += transaction.amount
             }
 
         })
 
-        return expenses
+        return expense
 
         // Somar as saídas
     },
@@ -85,15 +88,15 @@ const Transaction = {
 
 const DOM = {
 
-    transactionContainer: document.querySelector("#data-table tbody"),
+    transactionsContainer: document.querySelector("#data-table tbody"),
 
     addTransaction(transactions, index){
         const tr = document.createElement('tr')
         tr.innerHTML = DOM.innerHTMLTransacion(transactions, index)
-        // tr.dataset.index = index
+        tr.dataset.index = index
         
 
-        DOM.transactionContainer.appendChild(tr)
+        DOM.transactionsContainer.appendChild(tr)
         
     },
     innerHTMLTransacion(transactions, index){
@@ -123,23 +126,24 @@ const DOM = {
     },
 
     clearTransaction(){
-        DOM.transactionContainer.innerHTML = ""
+        DOM.transactionsContainer.innerHTML = ""
     }
 }
 
 const Utils = {
-
-    formatDate(date){
-        const splittedDate = date.split("-")
-        return `${splittedDate[2]}/${splittedDate[1]}/${splittedDate[0]}`
-    },
-
+    
     formatAmount(value){
         value = Number(value) * 100
         return value
 
         // value = Number(value.replace(/\,?\./g, "")) * 100 para ter retira . e a , 100%
     },
+    
+    formatDate(date){
+        const splittedDate = date.split("-")
+        return `${splittedDate[2]}/${splittedDate[1]}/${splittedDate[0]}`
+    },
+
 
     formatCurrency(value){
         const signal = Number(value) < 0 ? "-" : ""
@@ -170,8 +174,6 @@ const Form = {
         }
     },
 
-    formatData(){
-    },
     validateFields(){
         const {description, amount, date} = Form.getValues()
 
@@ -190,43 +192,27 @@ const Form = {
          return{
               description,
               amount,
-              date,
+              date
          }
-    },
-    saveTransaction(transaction){
-        Transaction.add(transaction)
     },
     clearFields(){
         Form.description.value = ""
         Form.amount.value = ""
         Form.date.value = ""
     },    
+
     submit(event){
         event.preventDefault()
 
-
         try {
             Form.validateFields()
-
             const transaction = Form.formatValues()
-            //salvar o
-            Form.saveTransaction(transaction)
-            //apgar os dados do formulario
+            Transaction.add(transaction)
             Form.clearFields()
-            //modal feche
             Modal.close()
-
         } catch (error) {
             alert(error.message)
         }
-
-
-
-
-
-
-        
-
 
     }
 
@@ -234,11 +220,11 @@ const Form = {
 
 const App = {
     init(){
-       Transaction.all.forEach(function(transaction, index){
-            DOM.addTransaction(transaction, index)
-        })
+        Transaction.all.forEach(DOM.addTransaction)
 
         DOM.updateBalance()
+
+        Storage.set(Transaction.all)
     },
     reload(){
         DOM.clearTransaction()
@@ -248,4 +234,4 @@ const App = {
 
 App.init()
 
-2:55:37
+

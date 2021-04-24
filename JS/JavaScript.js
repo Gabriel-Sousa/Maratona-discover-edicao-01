@@ -239,6 +239,8 @@ const App = {
         })
 
         DOM.updateBalance()
+
+        Storage.set(Transaction.all)
     },
     reload(){
         DOM.clearTransaction()

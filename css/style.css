@@ -1,7 +1,7 @@
 /* Global ======================================== */
 :root{
     --dark-blue: #363f5f;
-    --green: #49AA26;
+    --green: #01b12d;
     --light-green:#3dd705;
     --red: #e92929;
 }
@@ -92,7 +92,7 @@ button:hover{
 
 /* Header ======================================== */
 header{
-    background-color: #2D4A22;
+    background-color: #018f14;
     padding: 2rem 0 10rem;
     text-align: center;
 }
@@ -285,4 +285,20 @@ footer {
         border-spacing: 0 0.5rem;
         color: #969cb3;
     }
+}
+
+.b{
+    color: white;
+    font-size: 20px;
+}
+.e{
+    color: black;
+    font-size: 20px;
+
+
+}
+.f{
+    color: white;
+    font-size: 20px;
+
 }
